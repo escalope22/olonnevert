@@ -104,6 +104,96 @@
       justify-content: center;
       flex-shrink: 0;
     }
+
+    /* Formulaire devis */
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.95rem;
+      color: #111827;
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .form-input:focus {
+      border-color: #2D5A27;
+      box-shadow: 0 0 0 3px rgba(45,90,39,0.1);
+    }
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      border: 1.5px solid #d1d5db;
+      border-radius: 9px;
+      padding: 8px 13px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .radio-label:has(input:checked) {
+      border-color: #2D5A27;
+      background: #f0f7ef;
+      color: #2D5A27;
+      font-weight: 600;
+    }
+    .radio-label input { display: none; }
+    .file-drop {
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #fafafa;
+    }
+    .file-drop:hover, .file-drop.dragover {
+      border-color: #2D5A27;
+      background: #f0f7ef;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #2D5A27;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-submit:hover { background: #1e3d1a; }
+    .btn-submit:active { transform: scale(0.98); }
+    .form-success {
+      display: none;
+      background: #f0f7ef;
+      border: 1.5px solid #a7d9a0;
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+    }
   </style>
 </head>
 <body class="font-sans text-gray-800 bg-white antialiased">
@@ -260,6 +350,110 @@
   </section>
 
   <!-- ═══════════════════════════════════════
+       FORMULAIRE DEVIS
+  ═══════════════════════════════════════ -->
+  <section id="devis" class="bg-gray-50 px-5 py-12">
+    <div class="max-w-lg mx-auto">
+
+      <div class="text-center mb-8">
+        <span class="inline-block bg-green-100 text-forest text-xs font-semibold px-3 py-1 rounded-full mb-3">Gratuit & sans engagement</span>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Demandez un devis rapide</h2>
+        <p class="text-sm text-gray-500">Réponse sous 24h. Joignez des photos pour un tarif plus précis.</p>
+      </div>
+
+      <!-- Succès -->
+      <div id="form-success" class="form-success">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="font-bold text-gray-900 text-lg">Demande envoyée !</p>
+        <p class="text-sm text-gray-500 mt-1">Victor vous répondra dans les 24h. Merci de votre confiance.</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form id="devis-form" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-5" novalidate>
+
+        <!-- Nom + Téléphone -->
+        <div class="flex gap-3">
+          <div class="flex-1">
+            <label class="form-label" for="nom">Nom *</label>
+            <input id="nom" name="nom" type="text" class="form-input" placeholder="Dupont" required />
+          </div>
+          <div class="flex-1">
+            <label class="form-label" for="tel">Téléphone *</label>
+            <input id="tel" name="tel" type="tel" class="form-input" placeholder="06 12 34 56 78" required />
+          </div>
+        </div>
+
+        <!-- Adresse -->
+        <div>
+          <label class="form-label" for="adresse">Adresse *</label>
+          <input id="adresse" name="adresse" type="text" class="form-input" placeholder="12 rue des Dunes, Les Sables-d'Olonne" required />
+        </div>
+
+        <!-- Disponibilités -->
+        <div>
+          <label class="form-label">Jours de disponibilité *</label>
+          <div class="radio-group" role="group" aria-label="Jours disponibles">
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Lundi" /> Lundi</label>
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Mardi" /> Mardi</label>
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Mercredi" /> Mercredi</label>
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Jeudi" /> Jeudi</label>
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Vendredi" /> Vendredi</label>
+            <label class="radio-label"><input type="checkbox" name="dispo" value="Samedi" /> Samedi</label>
+          </div>
+        </div>
+
+        <!-- Taille -->
+        <div>
+          <label class="form-label">Surface approximative *</label>
+          <div class="radio-group" role="group" aria-label="Surface du jardin">
+            <label class="radio-label"><input type="radio" name="surface" value="Moins de 50 m²" required /> &lt; 50 m²</label>
+            <label class="radio-label"><input type="radio" name="surface" value="50 – 100 m²" /> 50–100 m²</label>
+            <label class="radio-label"><input type="radio" name="surface" value="100 – 200 m²" /> 100–200 m²</label>
+            <label class="radio-label"><input type="radio" name="surface" value="Plus de 200 m²" /> &gt; 200 m²</label>
+          </div>
+        </div>
+
+        <!-- Photos -->
+        <div>
+          <label class="form-label">Photos (optionnel)</label>
+          <div class="file-drop" id="file-drop-zone" onclick="document.getElementById('photos').click()">
+            <svg class="mx-auto mb-2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p class="text-sm text-gray-400 font-medium" id="file-label">Appuyez pour ajouter des photos</p>
+            <p class="text-xs text-gray-400 mt-1">Jardin, terrasse, haies… jusqu'à 5 photos</p>
+            <input id="photos" name="photos" type="file" accept="image/*" multiple class="hidden" aria-label="Ajouter des photos" />
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label class="form-label" for="message">Précisions (optionnel)</label>
+          <textarea id="message" name="message" class="form-input" rows="3" placeholder="Ex : haie de 10m à tailler, tonte d'urgence avant location…" style="resize:vertical"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Envoyer ma demande
+        </button>
+
+        <p class="text-xs text-gray-400 text-center -mt-2">
+          En envoyant, votre client email s'ouvre avec les infos pré-remplies.<br/>Vous pourrez y joindre vos photos avant d'envoyer.
+        </p>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════ -->
   <footer class="bg-gray-50 border-t border-gray-100 px-5 py-8 text-center">
@@ -285,16 +479,100 @@
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.99 1.18 2 2 0 013 .99h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
       </svg>
-      Appeler Victor
+      Appeler
     </a>
-    <a href="mailto:victor@olonnevert.fr" class="btn-email">
+    <a href="#devis" class="btn-email">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2D5A27" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <line x1="9" y1="15" x2="15" y2="15"/>
       </svg>
-      Envoyer un Email
+      Devis gratuit
     </a>
   </div>
+
+  <script>
+    // Affichage des fichiers sélectionnés
+    document.getElementById('photos').addEventListener('change', function () {
+      const count = this.files.length;
+      const label = document.getElementById('file-label');
+      label.textContent = count > 0
+        ? count === 1 ? '1 photo sélectionnée' : count + ' photos sélectionnées'
+        : 'Appuyez pour ajouter des photos';
+    });
+
+    // Drag & drop
+    const dropZone = document.getElementById('file-drop-zone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const input = document.getElementById('photos');
+      input.files = e.dataTransfer.files;
+      input.dispatchEvent(new Event('change'));
+    });
+
+    // Soumission → mailto
+    document.getElementById('devis-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const f = this;
+
+      // Validation rapide
+      const required = ['nom', 'tel', 'adresse'];
+      let ok = true;
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) { el.style.borderColor = '#ef4444'; ok = false; }
+        else el.style.borderColor = '';
+      });
+      const surface = f.querySelector('input[name="surface"]:checked');
+      if (!surface) {
+        f.querySelector('.radio-group').style.outline = '2px solid #ef4444';
+        ok = false;
+      }
+      if (!ok) return;
+
+      // Construction du corps
+      const nom = document.getElementById('nom').value.trim();
+      const tel = document.getElementById('tel').value.trim();
+      const adresse = document.getElementById('adresse').value.trim();
+      const dispos = [...f.querySelectorAll('input[name="dispo"]:checked')].map(i => i.value).join(', ') || 'Non précisé';
+      const surf = surface.value;
+      const message = document.getElementById('message').value.trim();
+      const photos = document.getElementById('photos').files.length;
+
+      const body = [
+        'Bonjour Victor,',
+        '',
+        'Je souhaite obtenir un devis pour l\'entretien de mon jardin/terrasse.',
+        '',
+        '--- Mes infos ---',
+        'Nom : ' + nom,
+        'Téléphone : ' + tel,
+        'Adresse : ' + adresse,
+        'Disponibilités : ' + dispos,
+        'Surface : ' + surf,
+        message ? 'Précisions : ' + message : '',
+        photos > 0 ? '(Photos jointes : ' + photos + ' fichier(s))' : '',
+        '',
+        'Cordialement,',
+        nom,
+      ].filter(l => l !== null).join('\n');
+
+      const mailto = 'mailto:victor@olonnevert.fr'
+        + '?subject=' + encodeURIComponent('Demande de devis – ' + nom)
+        + '&body=' + encodeURIComponent(body);
+
+      window.location.href = mailto;
+
+      // Afficher le message de succès
+      document.getElementById('devis-form').style.display = 'none';
+      const success = document.getElementById('form-success');
+      success.style.display = 'block';
+    });
+  </script>
 
 </body>
 </html>
